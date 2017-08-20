@@ -1,4 +1,4 @@
-# Addresses
+# Super Mario Galaxy memory addresses
 
 ## Notes
 
@@ -21,6 +21,12 @@
   - Source: "Infinite Health" code by dexter0
 
 ## Memory values
+
+By type:
+
+- [Spin-related values](spin_related.md)
+
+By memory location:
 
 - [Static-address values](static.md)
 - [Reference pointer based values](ref_based.md)
