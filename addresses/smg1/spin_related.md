@@ -3,17 +3,17 @@
 
 ## Shake status
 
-**Wiimote shake bit 1**: Start + 0x9E9BE8 (1 byte integer)
+**Wiimote shake bit/main**: Start + 0x9E9BE8 (1 byte integer)
 
   * 1 on a frame where the game registers a Wiimote shake, 0 otherwise.
   * If you hold Shake X/Y/Z on a Dolphin emulated Wiimote, this value is 1 for about 75% of frames.
   * On the ground or in midair, if there is no spin cooldown or suppression, a spin occurs when this bit goes from 0 to 1.
-  * In water, if Wiimote continuous shake time 1 is not running, a spin occurs when this bit goes to 1.
+  * In water, if "Wiimote continuous shake time/main" is not running, a spin occurs when this bit goes to 1.
   
-**Wiimote shake bit 2**: Start + 0x9E9BFC (1 byte integer)
+**Wiimote shake bit/continuous water spins**: Start + 0x9E9BFC (1 byte integer)
 
-  * Similar behavior to Wiimote shake bit 1, but the value is 1 on different frames.
-  * This bit does not seem to trigger spins directly. However, it controls Wiimote continuous shake time 2, which in turn controls consecutive water spins.
+  * Similar behavior to Wiimote shake bit/main, but the value is 1 on different frames.
+  * This bit does not seem to trigger spins directly. However, it controls "Wiimote continuous shake time/water spins".
 
 **Nunchuk shake bit**: refPointer + 0x27F1 (1 byte integer)
 
@@ -32,33 +32,33 @@ This buffering only works for Wiimote underwater spins and Wiimote surface spins
 
 The following memory values are involved:
   
-**Wiimote shake downtime 1**: Start + 0x9E9BF2 (2 byte integer)
+**Wiimote shake downtime/main**: Start + 0x9E9BF2 (2 byte integer)
 
-**Wiimote shake downtime 2**: Start + 0x9E9C06 (2 byte integer)
+**Wiimote shake downtime/water spins**: Start + 0x9E9C06 (2 byte integer)
 
   * Both downtimes count up 1 per frame in the absence of Wiimote shakes.
   * Both go to 0 when you do a Wiimote shake, then resume counting up some frames afterward.
   * The shake sensitivity is a little different between the two downtime values. The details of the sensitivity difference are unknown; all we know is that the two downtimes often reset to 0 on different frames, and resume counting on different frames.
   * Active even at times when you couldn't normally spin, such as during the penguin race "3 2 1" and during a ground pound.
 
-**Wiimote continuous shake time 1**: Start + 0x9E9BEE (2 byte integer)
+**Wiimote continuous shake time/main**: Start + 0x9E9BEE (2 byte integer)
 
-**Wiimote continuous shake time 2**: Start + 0x9E9C02 (2 byte integer)
+**Wiimote continuous shake time/water spins**: Start + 0x9E9C02 (2 byte integer)
 
   * Both times are 0 in the absence of Wiimote shakes.
   * Both start counting up 1 per frame when a Wiimote shake happens.
-  * Continuous shake time 1 resets to 0 when downtime 1 reaches 7.
-  * Continuous shake time 2 resets to 0 when downtime 2 reaches 9.
+  * Continuous shake time/main resets to 0 when downtime/main reaches 7.
+  * Continuous shake time/water spins resets to 0 when downtime/water spins reaches 9.
   * In water, if there is no spin cooldown, suppression, or active water spin timer, a spin happens when:
-    * Continuous shake time 1's value is 2, OR
-    * Continuous shake time 2's value is 31, 46, 61, 76, etc. (intervals of 15 frames).
+    * Continuous shake time/main is 2, OR
+    * Continuous shake time/water spins is 31, 46, 61, 76, etc. (intervals of 15 frames).
   * Active even at times when you couldn't normally spin.
 
 **Wiimote water spin filter**: refPointer + 0x27F0 (1 byte integer)
   
   * In water: If you keep shaking the Wiimote, is 1 once every 15 frames, and 0 on other frames. 0 in the absence of Wiimote shaking.
-    * The frames when this is 1 are the same frames when continuous shake time 2 is 31, 46, 61, 76, etc. So, 1 frames are the only frames when water spins can happen.
-  * On ground and in midair: Behaves the same as Wiimote shake bit 1.
+    * The frames when this is 1 are the same frames when Continuous shake time/water spins is 31, 46, 61, 76, etc. So, 1 frames are the only frames when water spins can happen.
+  * On ground and in midair: Behaves the same as Wiimote shake bit/main.
 
 **Water spin timer**: refPointer + 0x6A4D (1 byte integer)
 
@@ -78,8 +78,8 @@ There are two timers which seem to suppress spins from happening as long as they
 **Wiimote spin suppression timer**: refPointer + 0x27ED (1 byte integer)
   
   * Press A or B anywhere: Goes to 9, then counts down 1 per frame. During these countdown frames, Wiimote spins seem to be suppressed.
-  * Ground spins: Goes to 8 when Wiimote shake bit is 1. Counts down 1 per frame until 0 when Wiimote shake bit is 0.
-  * Midair spins: If this is 0 and Wiimote shake bit is 1, goes to 8, then counts down 1 per frame until 0. In midair, if a countdown starts, the value can't go to 8 again until the countdown finishes.
+  * Ground spins: Goes to 8 when Wiimote shake bit/main is 1. Counts down 1 per frame until 0 when Wiimote shake bit/main is 0.
+  * Midair spins: If this is 0 and Wiimote shake bit/main is 1, goes to 8, then counts down 1 per frame until 0. In midair, if a countdown starts, the value can't go to 8 again until the countdown finishes.
   * Does not respond to water spins.
 
 **Nunchuk spin suppression timer**: refPointer + 0x27EF (1 byte integer)
