@@ -31,5 +31,5 @@ Water animation timer | 0x69FD | 1 | Integer | [Spin related values](spin_relate
 Unknown water timer | 0x6A01 | 1 | Integer | [Spin related values](spin_related.md)
 Gravity up-vector | 0x6A3C | 12 | Float 3D vector
 Water spin timer | 0x6A4D | 1 | Integer | [Spin related values](spin_related.md)
-Water state | 0x6A6F | 1 | Integer | 0: on surface, not moving; 1: on surface, moving; 2: underwater, moving; 3: underwater, not moving; 255: out of water
+Water state | 0x6A6F | 1 | Integer | 0: on surface, not moving; 1: on surface, moving; 2: underwater, moving; 3: underwater, not moving; 255: out of water. The 'being pulled toward surface' movement state still counts as underwater
 Air | 0x6AB8 | 4 | Integer | Full meter = 3600. Decreases 1 per frame underwater, increases 32 per frame above surface. Starts decreasing 2 seconds after going underwater. Decreases 225 (1/16th) per Luigi spin. After reaching 0 air, take 1 damage after 4 seconds, and then additional damage every 3 seconds.
