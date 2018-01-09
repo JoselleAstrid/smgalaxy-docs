@@ -1,5 +1,6 @@
 # Super Mario Galaxy memory addresses
 
+
 ## Notes
 
 - \[Brackets\] in an address calculation indicate a pointer dereference.
@@ -7,6 +8,8 @@
 - "(A)" "(B)" etc. denote multiple versions of basically the same value. Either the nature of the differences is unknown, or it's not known whether there are differences.
 - "(Derived)" means a value seems to have a simple derivation from a previously covered value, and it's unknown whether this value serves some other purpose.
 - "-" for Item and Type means the value is always 0 from observations so far, or it's not always 0 but it's totally unknown what kind of value it could be.
+- If an address doesn't seem to be correct in the North American or PAL version, try the Japanese version. Some of the addresses described here have only been tested for the JP version.
+
 
 ## Base addresses and pointers
 
@@ -20,6 +23,7 @@
   - This reference pointer's value is 0x18D0 greater than the above reference pointer.
   - Source: "Infinite Health" code by dexter0
 
+
 ## Memory values
 
 By type:
@@ -30,3 +34,9 @@ By memory location:
 
 - [Static-address values](static.md)
 - [Reference pointer based values](ref_based.md)
+- [Shake-related block](shake_related_block.md)
+
+
+## Miscellaneous notes
+
+- [Address-finding notes](address_finding_notes.md)

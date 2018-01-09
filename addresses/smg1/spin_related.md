@@ -3,14 +3,14 @@
 
 ## Shake status
 
-**Wiimote shake bit/main**: Start + 0x9E9BE8 (1 byte integer)
+**Wiimote shake bit/main**: Shake-related block + 0xC (1 byte integer)
 
   * 1 on a frame where the game registers a Wiimote shake, 0 otherwise.
   * If you hold Shake X/Y/Z on a Dolphin emulated Wiimote, this value is 1 for about 75% of frames.
   * On the ground or in midair, if there is no spin cooldown or suppression, a spin occurs when this bit goes from 0 to 1.
   * In water, if "Wiimote continuous shake time/main" is not running, a spin occurs when this bit goes to 1.
   
-**Wiimote shake bit/continuous water spins**: Start + 0x9E9BFC (1 byte integer)
+**Wiimote shake bit/continuous water spins**: Shake-related block + 0x20 (1 byte integer)
 
   * Similar behavior to Wiimote shake bit/main, but the value is 1 on different frames.
   * This bit does not seem to trigger spins directly. However, it controls "Wiimote continuous shake time/water spins".
@@ -32,18 +32,18 @@ This buffering only works for Wiimote underwater spins and Wiimote surface spins
 
 The following memory values are involved:
   
-**Wiimote shake downtime/main**: Start + 0x9E9BF2 (2 byte integer)
+**Wiimote shake downtime/main**: Shake-related block + 0x14 (4 byte integer)
 
-**Wiimote shake downtime/water spins**: Start + 0x9E9C06 (2 byte integer)
+**Wiimote shake downtime/water spins**: Shake-related block + 0x28 (4 byte integer)
 
   * Both downtimes count up 1 per frame in the absence of Wiimote shakes.
   * Both go to 0 when you do a Wiimote shake, then resume counting up some frames afterward.
   * The shake sensitivity is a little different between the two downtime values. The details of the sensitivity difference are unknown; all we know is that the two downtimes often reset to 0 on different frames, and resume counting on different frames.
   * Active even at times when you couldn't normally spin, such as during the penguin race "3 2 1" and during a ground pound.
 
-**Wiimote continuous shake time/main**: Start + 0x9E9BEE (2 byte integer)
+**Wiimote continuous shake time/main**: Shake-related block + 0x10 (4 byte integer)
 
-**Wiimote continuous shake time/water spins**: Start + 0x9E9C02 (2 byte integer)
+**Wiimote continuous shake time/water spins**: Shake-related block + 0x24 (4 byte integer)
 
   * Both times are 0 in the absence of Wiimote shakes.
   * Both start counting up 1 per frame when a Wiimote shake happens.
